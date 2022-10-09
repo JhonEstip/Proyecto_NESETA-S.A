@@ -20,21 +20,22 @@ public class Sucursal implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_sucursarl;
+	private Long id_sucursal;
 	
 	@Column(name="descripcion", length = 50)
 	private String descripcion;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="id_ciudad")
 	private Ciudad ciudad;
-
+	
+	
 	public Long getId() {
-		return id_sucursarl;
+		return id_sucursal;
 	}
 
 	public void setId(Long id) {
-		this.id_sucursarl = id;
+		this.id_sucursal = id;
 	}
 
 	public String getDescripcion() {
