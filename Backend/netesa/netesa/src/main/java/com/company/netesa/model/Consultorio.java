@@ -23,7 +23,7 @@ public class Consultorio implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="id_sucursal")
-	private Sucursal id_surcursal;
+	private Sucursal id_sucursal;
 	
 	@Column(name="piso")
 	private Long piso;
@@ -39,12 +39,12 @@ public class Consultorio implements Serializable{
 		this.id_consultorio = id_consultorio;
 	}
 
-	public Sucursal getId_surcursal() {
-		return id_surcursal;
+	public Sucursal getId_sucursal() {
+		return id_sucursal;
 	}
 
-	public void setId_surcursal(Sucursal id_surcursal) {
-		this.id_surcursal = id_surcursal;
+	public void setId_sucursal(Sucursal id_sucursal) {
+		this.id_sucursal = id_sucursal;
 	}
 
 	public Long getPiso() {
