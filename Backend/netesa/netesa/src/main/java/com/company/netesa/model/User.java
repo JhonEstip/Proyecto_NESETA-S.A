@@ -7,8 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name="usuario")
@@ -43,6 +44,10 @@ public class User implements Serializable{
 	
 	@Column(name="password", length = 50)
 	private String password;
+	
+	@OneToOne
+    @JoinColumn(name = "id_genero")
+	private Genero genero;
 
 	public Long getId() {
 		return id;
@@ -106,6 +111,14 @@ public class User implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 	
 }
