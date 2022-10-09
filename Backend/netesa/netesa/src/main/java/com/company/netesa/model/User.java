@@ -43,11 +43,23 @@ public class User implements Serializable{
 	private String password;
 	
 	@OneToOne
+    @JoinColumn(name="tipo_documento")
+	private TipoDocumento tipodocumento;
+	
+	@OneToOne
     @JoinColumn(name = "id_genero")
 	private Genero genero;
 
 	public Long getId() {
 		return id;
+	}
+
+	public TipoDocumento getTipodocumento() {
+		return tipodocumento;
+	}
+
+	public void setTipodocumento(TipoDocumento tipodocumento) {
+		this.tipodocumento = tipodocumento;
 	}
 
 	public void setId(Long id) {
