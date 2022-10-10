@@ -49,6 +49,14 @@ public class User implements Serializable{
 	@OneToOne
     @JoinColumn(name = "id_genero")
 	private Genero genero;
+	
+	@OneToOne
+    @JoinColumn(name = "id_rol")
+	private Rol rol;
+	
+	@OneToOne
+    @JoinColumn(name = "id_ciudad")
+	private Ciudad ciudad;
 
 	public Long getId() {
 		return id;
