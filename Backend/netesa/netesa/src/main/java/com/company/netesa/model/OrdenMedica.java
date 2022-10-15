@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="citas")
+@Table(name="orden_medica")
 public class OrdenMedica implements Serializable{
 
 	/**
