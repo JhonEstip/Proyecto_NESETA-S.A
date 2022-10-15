@@ -59,7 +59,7 @@ export default {
         async obtenerData() {
             const options = {
                 method: 'POST',
-                body: JSON.stringify({ id: 2 }),
+                body: JSON.stringify({ id: 1 }),
                 headers: {
                     'Content-Type': 'application/json'
                     /* , 'Authorization': 'Bearer '+this.token */
@@ -74,7 +74,7 @@ export default {
                         this.mensajeError = error.message;
                         throw error;
                     } else {
-                        const data = await response.text();
+                        const data = await response.json();
                         this.token = data.access;
                         console.log(data);
                         this.$router.push('home')

@@ -12,7 +12,10 @@ import { RouterView } from 'vue-router';
            <RouterLink class="nav-link active" to="/home">Home</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink class="nav-link active" to="/Citas">Citas</RouterLink>
+          <RouterLink class="nav-link active" to="/citas">Citas</RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink class="nav-link active" to="/usuarios">Usuarios</RouterLink>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
