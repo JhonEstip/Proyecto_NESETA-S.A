@@ -2,6 +2,7 @@ package com.company.netesa.controller;
 
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class AuthController {
 		List<User> user = userService.findUserById(userDetalle.getId());
 		if(user!=null && user.size()>0) {
 			String tokenJwt = jwtUtil.getJWTToken(user.get(0).getNumeroDocumento()+"");
-            return ResponseEntity.ok(tokenJwt);
+            return ResponseEntity.ok(new JSONObject().put("access", tokenJwt.replace("Bearer ", "")).toString());
 		} 
 		return ResponseEntity.notFound().build();
 	}
