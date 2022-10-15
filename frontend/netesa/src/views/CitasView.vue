@@ -11,9 +11,6 @@
                 <div class="col-sm-3">
                     <input type="text" placeholder="Search..." id="buscador" class="form-control">
                 </div>
-                <div class="col-sm-3">
-                   <button class="btn btn-sm" @click="consultarPersonas">BUSCAR</button>
-                </div>
                 
             </div>
             <div class="row">
@@ -29,11 +26,11 @@
                             <td>Opciones</td>
                         </tr>
                         <tr v-for="item in resultadoPersonas" :key="item">
-                            <td>Neider Neme Virguez</td>
-                            <td>Alfredo Vargas</td>
-                            <td class="text-center">001</td>
-                            <td class="text-center">2</td>
-                            <td>Pediatria 1</td>
+                            <td>{{item.usuario.apellido}} {{item.usuario.nombre}}</td>
+                            <td>{{item.medico.identificacion}}</td>
+                            <td class="text-center">no hay info</td>
+                            <td class="text-center">no hay info</td>
+                            <td>no hay info</td>
                             <td>{{item.fechaCita}}</td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-warning">
@@ -171,6 +168,7 @@
                         const data = await response.json();
                         this.token = data.access;
                         console.log(data);
+                        this.consultarPersonas();
                     }
                 });
         }
