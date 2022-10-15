@@ -62,14 +62,6 @@ public class User implements Serializable{
 		return id;
 	}
 
-	public TipoDocumento getTipodocumento() {
-		return tipodocumento;
-	}
-
-	public void setTipodocumento(TipoDocumento tipodocumento) {
-		this.tipodocumento = tipodocumento;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -130,12 +122,36 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public TipoDocumento getTipodocumento() {
+		return tipodocumento;
+	}
+
+	public void setTipodocumento(TipoDocumento tipodocumento) {
+		this.tipodocumento = tipodocumento;
+	}
+
 	public Genero getGenero() {
 		return genero;
 	}
 
 	public void setGenero(Genero genero) {
 		this.genero = genero;
+	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
 	}
 	
 }
