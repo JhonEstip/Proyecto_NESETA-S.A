@@ -10,4 +10,5 @@ public interface UserService {
 	public Optional<User> consultarUsuarioId(Long id);
 	public User guardarUsuario(User usuario);
 	public void eliminarUsuario(Long id);
+	public List<User> findUserById(Long id);
 }

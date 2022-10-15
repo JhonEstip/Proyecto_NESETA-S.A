@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.company.netesa.model.User;
 import com.company.netesa.repository.UserRepository;
 
+
 @Service
 public class UserServiceImpl implements UserService{
 	@Autowired
@@ -38,6 +39,12 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public void eliminarUsuario(Long id) {
 		repositorioUsuario.deleteById(id);
+	}
+	
+	@Override
+	public List<User> findUserById(Long id) {
+		List<User> personas = repositorioUsuario.findUserById(id);
+		return personas;
 	}
 
 }
