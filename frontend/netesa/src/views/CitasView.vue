@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <table class="table table-sm table-bordered table-striped">
-                        <tr>
+                        <tr class="table-primary">
                             <td>Paciente</td>
                             <td>Medico</td>
                             <td>Consultorio</td>
@@ -43,7 +43,7 @@
                             </td>
                             <td></td>
                             <td></td>
-                            <td><input type="text" class="form-control form-contorl-sm" placeholder=""></td>
+                            <td><input type="text" class="form-control form-control-sm" placeholder=""></td>
                             <td class="text-center"><button class="btn btn-sm btn-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus"
                                         viewBox="0 0 16 16">
