@@ -35,6 +35,18 @@ public class Citas implements Serializable{
 	@OneToOne
     @JoinColumn(name = "id_usuario")
 	private User usuario;
+	
+	@OneToOne
+    @JoinColumn(name = "id_consultorio")
+	private Consultorio consultorio;
+
+	public Consultorio getConsultorio() {
+		return consultorio;
+	}
+
+	public void setConsultorio(Consultorio consultorio) {
+		this.consultorio = consultorio;
+	}
 
 	public Long getId() {
 		return id;

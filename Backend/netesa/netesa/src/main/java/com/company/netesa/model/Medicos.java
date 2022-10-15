@@ -26,8 +26,13 @@ public class Medicos implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="identificacion")
-	private Long identificacion;
+	@OneToOne
+	@JoinColumn(name="identificacion")
+	private User usuario ;
+	
+	@OneToOne
+	@JoinColumn(name="especialidad")
+	private Especialidad especialidad;
 
 	public Long getId() {
 		return id;
@@ -37,14 +42,20 @@ public class Medicos implements Serializable{
 		this.id = id;
 	}
 
-	public Long getIdentificacion() {
-		return identificacion;
+	public User getUsuario() {
+		return usuario;
 	}
 
-	public void setIdentificacion(Long identificacion) {
-		this.identificacion = identificacion;
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
 	}
-	
-	
+
+	public Especialidad getEspecialidad() {
+		return especialidad;
+	}
+
+	public void setEspecialidad(Especialidad especialidad) {
+		this.especialidad = especialidad;
+	}
 	
 }
