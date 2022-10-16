@@ -2,7 +2,7 @@
     <div class="container-x px-4">
         <div class="contenedor1">
             <div class="row pb-1 mt-4 d-flex justify-content-between">
-                <div class="col-sm-10"><h3>REPORTE DE CITAS PARA -{{}}-</h3></div>
+                <div class="col-sm-10"><h3>REPORTE DE CITAS PARA ADMINISTRADOR</h3></div>
                 <div class="col-sm-2">
                     <input type="date" class="form-control" value="date" id="fecha">
                 </div>
@@ -29,7 +29,7 @@
                             <td>
                                 <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoPaciente">
                                     <option value="" selected>Pacientes...</option>
-                                    <option v-for="item in resultadoPersonas" :key="item" :value="item.usuario.id">{{item.usuario.apellido +" "+item.usuario.nombre}}</option>
+                                    <option v-for="item in resultadoPersonas" :key="item" :value="item.id">{{item.apellido +" "+item.nombre}}</option>
                                 </select>
                             </td>
                             <td>
@@ -44,13 +44,14 @@
                                     <option v-for="item in resultadoConsultorios" :key="item" :value="item.id_consultorio">{{item.id_sucursal.ciudad.ciudad +" "+item.id_sucursal.descripcion +" "+item.descr_consultorio}}</option>
                                 </select>
                             </td>
-                            <td></td>
+                            <td><input type="text" v-model="idCita" hidden></td>
                             <td></td>
                             <td>
                                 <input type="text" class="form-control form-control-sm" placeholder="2022-10-15 10:00" v-model="fecha">
                             </td>
 
-                            <td class="text-center"><button class="btn btn-sm btn-info" @click="crear">
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-success" @click="crear">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus"
                                         viewBox="0 0 16 16">
                                         <path
@@ -58,9 +59,21 @@
                                         <path
                                             d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z" />
                                     </svg>
-                                </button></td>
+                                </button>
+                                <button class="ml-2 btn btn-sm btn-primary" @click="actualizar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z" />
+                                    </svg>
+                                </button>
+                            
+
+
+                                
+                            </td>
                         </tr>
-                        <tr v-for="item in resultadoPersonas" :key="item">
+                        <tr v-for="item in resultadoCitas" :key="item">
                             <td>{{item.usuario.apellido}} {{item.usuario.nombre}}</td>
                             <td>{{item.medico.usuario.apellido +" "+ item.medico.usuario.nombre}}</td>
                             <td class="text-center">00{{item.consultorio.id_consultorio}}</td>
@@ -95,16 +108,17 @@
             seleccionadoPaciente: '',
             seleccionadoMedico: '',
             seleccionadoConsultorio: '',
+            idCita: '',
             fecha: '',
             nombre: '',
             apellido: '',
             token: 'pendiente',
-            mensajeError: '',
             actualizando: false,
-            resultadoPersonas:[],
+            resultadoCitas:[],
             resultadoConsultorios:[],
             resultadoMedicos:[],
-            resultadoPersonaEdicion: []
+            resultadoPersonas:[],
+            resultadoCitaEdicion: []
         }
     },
     computed: {
@@ -113,12 +127,6 @@
                 n.toLowerCase().startsWith(this.prefijo.toLowerCase())
             )
         },
-        botonCrearDeshabilitado() {
-            return this.actualizando;
-        },
-        botonActualizarDeshabilitado() {
-            return !this.actualizando;
-        }
     },
     watch: {
         seleccionado(nombreCompleto) {
@@ -136,36 +144,25 @@
             }
         },
         editar(id) {
-            console.log("entre a editar",id);
             this.consultarCitaId(id);
-            if (this.seleccionadoPaciente && this.seleccionadoMedico && this.seleccionadoConsultorio) {
-                const i = this.nombres.indexOf(this.seleccionado);
-                this.nombres[i] = this.seleccionado = `${this.apellido}, ${this.nombre}`;
-                this.seleccionado = this.nombre = this.apellido = '';
-                mensajeError = '';
-                this.actualizando = false;
-                this.$forceUpdate();
-            } else {
-                mensajeError = "Por favor ingrese todos los datos para actualizar la información.";
-            }
         },
+
         actualizar() {
-            if (this.entradaValida() && this.seleccionado) {
-                const i = this.nombres.indexOf(this.seleccionado);
-                this.nombres[i] = this.seleccionado = `${this.apellido}, ${this.nombre}`;
-                this.seleccionado = this.nombre = this.apellido = '';
-                mensajeError = '';
-                this.actualizando = false;
-                this.$forceUpdate();
-            } else {
-                mensajeError = "Por favor ingrese todos los datos para actualizar la información.";
+            if (this.entradaValida) {
+                this.actualizarCita(
+                    this.idCita, 
+                    this.fecha, 
+                    this.seleccionadoConsultorio, 
+                    this.seleccionadoMedico, 
+                    this.seleccionadoPaciente);
             }
         },
-        eliminar(id) {
+
+        eliminar(id) { //funcional
             this.eliminarCita(id);
         },
-        entradaValida() {
-            return this.seleccionadoPaciente.trim() && this.seleccionadoMedico.trim();
+        entradaValida() { //funcional
+            return this.seleccionadoPaciente.trim() && this.seleccionadoMedico.trim() && this.seleccionadoConsultorio.trim() && this.fecha.trim();
         },
         async eliminarCita(id) {
             const options = {
@@ -204,12 +201,64 @@
                         throw error;
                     } else {
                         const data = await response.json();
-                        //console.log(data);
+                        //console.log("medicos",data);
                         this.resultadoMedicos = data;
                     }
                 });
         },
+        async consultarCitaId(id) {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token 
+                }
+            };
+
+            fetch('http://localhost:8080/api/citas/'+id, options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        console.log("resultadocitaid",data);
+                        this.resultadoCitaEdicion = data;
+
+                        this.seleccionadoMedico = this.resultadoCitaEdicion['medico']['id'];
+                        this.seleccionadoPaciente = this.resultadoCitaEdicion['usuario']['id'];
+                        this.seleccionadoConsultorio = this.resultadoCitaEdicion['consultorio']['id_consultorio'];
+                        this.fecha = this.resultadoCitaEdicion['fechaCita'];
+                        this.idCita = this.resultadoCitaEdicion['id'];
+                    }
+                });
+        },
         async consultarPersonas() {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token 
+                }
+            };
+
+            fetch('http://localhost:8080/api/usuarios', options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        //console.log("personas",data);
+                        this.resultadoPersonas = data;
+                    }
+                });
+        },
+        async consultarCitas() {
             const options = {
                 method: 'GET',
                 headers: {
@@ -228,7 +277,7 @@
                     } else {
                         const data = await response.json();
                         //console.log(data);
-                        this.resultadoPersonas = data;
+                        this.resultadoCitas = data;
                     }
                 });
         },
@@ -255,6 +304,41 @@
                     }
                 });
         },
+        async actualizarCita(idCita, fecha, consultorio, medico, paciente) {
+            const options = {
+                method: 'PUT',
+                body: JSON.stringify(
+                    {
+                     fechaCita:fecha,
+                     consultorio:{id_consultorio:consultorio},
+                     medico:{id:medico},
+                     usuario:{id:paciente}
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token
+                }
+            };
+
+            fetch('http://localhost:8080/api/citas/'+idCita, options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        this.token = data.access;
+                        console.log(data);
+                        alertify.success('Cita actualizada');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    }
+                });
+    },
         async crearCita(paciente,medico,consultorio,hora) {
             console.log({
                      fechaCita:hora,
@@ -289,6 +373,7 @@
                         const data = await response.json();
                         this.token = data.access;
                         console.log(data);
+                        alertify.success('Cita creada');
                         setTimeout(() => {
                             window.location.reload();
                         }, 1000);
@@ -316,16 +401,17 @@
                         const data = await response.json();
                         this.token = data.access;
                         console.log(data);
-                        this.consultarPersonas();
+                        this.consultarCitas();
                         this.consultarConsultorio();
                         this.consultarMedicos();
+                        this.consultarPersonas();
                     }
                 });
         }
     },
     mounted() {
         this.obtenerData();
-        /* this.consultarPersonas();
+        /* this.consultarCitas();
         this.consultarConsultorio();
         this.consultarMedicos(); */
     }
