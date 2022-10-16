@@ -75,7 +75,6 @@ export default {
                         throw error;
                     } else {
                         const data = await response.json();
-                        this.token = data.access;
                         console.log(data);
                         this.$router.push('home')
                     }
