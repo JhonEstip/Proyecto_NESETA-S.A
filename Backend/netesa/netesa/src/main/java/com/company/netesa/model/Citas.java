@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,25 +29,17 @@ public class Citas implements Serializable{
 	@Column(name="fecha_hora")
 	private String fechaCita;
 	
-	@OneToOne
+	@ManyToOne
     @JoinColumn(name = "id_medico")
 	private Medicos medico;
 	
-	@OneToOne
+	@ManyToOne
     @JoinColumn(name = "id_usuario")
 	private User usuario;
 	
-	@OneToOne
+	@ManyToOne
     @JoinColumn(name = "id_consultorio")
 	private Consultorio consultorio;
-
-	public Consultorio getConsultorio() {
-		return consultorio;
-	}
-
-	public void setConsultorio(Consultorio consultorio) {
-		this.consultorio = consultorio;
-	}
 
 	public Long getId() {
 		return id;
@@ -80,6 +73,12 @@ public class Citas implements Serializable{
 		this.usuario = usuario;
 	}
 
-	
+	public Consultorio getConsultorio() {
+		return consultorio;
+	}
+
+	public void setConsultorio(Consultorio consultorio) {
+		this.consultorio = consultorio;
+	}
 	
 }

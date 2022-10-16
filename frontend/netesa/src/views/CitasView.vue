@@ -27,24 +27,30 @@
                         </tr>
                         <tr>
                             <td>
-                                <select name="" id="" class="form-control form-control-sm">
-                                    <option value="">Pacientes...</option>
+                                <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoPaciente">
+                                    <option value="" selected>Pacientes...</option>
+                                    <option v-for="item in resultadoPersonas" :key="item" :value="item.usuario.id">{{item.usuario.apellido +" "+item.usuario.nombre}}</option>
                                 </select>
                             </td>
                             <td>
-                                <select name="" id="" class="form-control form-control-sm">
+                                <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoMedico">
                                     <option value="">Medicos...</option>
+                                    <option v-for="item in resultadoMedicos" :key="item" :value="item.id">{{item.usuario.apellido +" "+item.usuario.nombre}}</option>
                                 </select>
                             </td>
                             <td>
-                                <select name="" id="" class="form-control form-control-sm">
+                                <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoConsultorio">
                                     <option value="">Consultorio...</option>
+                                    <option v-for="item in resultadoConsultorios" :key="item" :value="item.id_consultorio">{{item.id_sucursal.ciudad.ciudad +" "+item.id_sucursal.descripcion +" "+item.descr_consultorio}}</option>
                                 </select>
                             </td>
                             <td></td>
                             <td></td>
-                            <td><input type="text" class="form-control form-control-sm" placeholder=""></td>
-                            <td class="text-center"><button class="btn btn-sm btn-info">
+                            <td>
+                                <input type="text" class="form-control form-control-sm" placeholder="2022-10-15 10:00" v-model="fecha">
+                            </td>
+
+                            <td class="text-center"><button class="btn btn-sm btn-info" @click="crear">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus"
                                         viewBox="0 0 16 16">
                                         <path
@@ -62,7 +68,7 @@
                             <td>{{item.consultorio.descr_consultorio}}</td>
                             <td>{{item.fechaCita}}</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-warning">
+                                <button class="btn btn-sm btn-warning" @click="editar(item.id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                     </svg>
@@ -85,15 +91,20 @@
     export default ({
         data() {
         return {
-            nombres: [],
-            seleccionado: '',
-            prefijo: '',
+            citas: [],
+            seleccionadoPaciente: '',
+            seleccionadoMedico: '',
+            seleccionadoConsultorio: '',
+            fecha: '',
             nombre: '',
             apellido: '',
             token: 'pendiente',
             mensajeError: '',
             actualizando: false,
-            resultadoPersonas:[]
+            resultadoPersonas:[],
+            resultadoConsultorios:[],
+            resultadoMedicos:[],
+            resultadoPersonaEdicion: []
         }
     },
     computed: {
@@ -116,17 +127,26 @@
     },
     methods: {
         crear() {
-            if (this.entradaValida()) {
-                const nombreCompleto = `${this.apellido}, ${this.nombre}`
-                if (!this.nombres.includes(nombreCompleto)) {
-                    this.nombres.push(nombreCompleto)
-                    this.nombre = this.apellido = '';
-                    mensajeError = '';
-                    this.actualizando = false;
-                    this.$forceUpdate();
-                }
+            if (this.entradaValida) {
+                this.crearCita(
+                    this.seleccionadoPaciente,
+                    this.seleccionadoMedico,
+                    this.seleccionadoConsultorio,
+                    this.fecha);
+            }
+        },
+        editar(id) {
+            console.log("entre a editar",id);
+            this.consultarCitaId(id);
+            if (this.seleccionadoPaciente && this.seleccionadoMedico && this.seleccionadoConsultorio) {
+                const i = this.nombres.indexOf(this.seleccionado);
+                this.nombres[i] = this.seleccionado = `${this.apellido}, ${this.nombre}`;
+                this.seleccionado = this.nombre = this.apellido = '';
+                mensajeError = '';
+                this.actualizando = false;
+                this.$forceUpdate();
             } else {
-                mensajeError = "Por favor ingrese todos los datos para crear la persona.";
+                mensajeError = "Por favor ingrese todos los datos para actualizar la información.";
             }
         },
         actualizar() {
@@ -151,7 +171,30 @@
             }
         },
         entradaValida() {
-            return this.nombre.trim() && this.apellido.trim();
+            return this.seleccionadoPaciente.trim() && this.seleccionadoMedico.trim();
+        },
+        async consultarMedicos() {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token 
+                }
+            };
+
+            fetch('http://localhost:8080/api/medicos', options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        //console.log(data);
+                        this.resultadoMedicos = data;
+                    }
+                });
         },
         async consultarPersonas() {
             const options = {
@@ -171,11 +214,71 @@
                         throw error;
                     } else {
                         const data = await response.json();
-                        console.log(data);
+                        //console.log(data);
                         this.resultadoPersonas = data;
                     }
                 });
         },
+        async consultarConsultorio() {
+            const options = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token 
+                }
+            };
+
+            fetch('http://localhost:8080/api/consultorio', options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        //console.log(data);
+                        this.resultadoConsultorios = data;
+                    }
+                });
+        },
+        async crearCita(paciente,medico,consultorio,hora) {
+            console.log({
+                     fechaCita:hora,
+                     consultorio:{id_consultorio:consultorio},
+                     medico:{id:medico},
+                     usuario:{id:paciente}
+                    });
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(
+                    {
+                     fechaCita:hora,
+                     consultorio:{id_consultorio:consultorio},
+                     medico:{id:medico},
+                     usuario:{id:paciente}
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token
+                }
+            };
+
+            fetch('http://localhost:8080/api/citas', options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        this.token = data.access;
+                        console.log(data);
+                    }
+                });
+    },
         async obtenerData() {
             const options = {
                 method: 'POST',
@@ -198,6 +301,8 @@
                         this.token = data.access;
                         console.log(data);
                         this.consultarPersonas();
+                        this.consultarConsultorio();
+                        this.consultarMedicos();
                     }
                 });
         }

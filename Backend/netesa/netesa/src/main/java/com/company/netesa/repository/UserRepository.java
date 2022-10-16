@@ -10,8 +10,7 @@ import com.company.netesa.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	
-	@Query(value = "SELECT * FROM usuario u WHERE u.id = :id", nativeQuery = true)
-	public List<User> findUserById(Long id);
 
+	List<User> findUserById(Long id);
+	
 }
