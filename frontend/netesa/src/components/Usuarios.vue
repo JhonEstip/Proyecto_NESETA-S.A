@@ -2,7 +2,7 @@
     <div class="container-x px-4">
         <div class="contenedor1">
             <div class="row pb-1 mt-4 d-flex justify-content-between">
-                <div class="col-sm-10"><h3>REPORTE DE CITAS PARA -{{}}-</h3></div>
+                <div class="col-sm-10"><h2 style="text-align: center;" >Gestion de Usuarios</h2></div>
                 <div class="col-sm-2">
                     <input type="date" class="form-control" value="date" id="fecha">
                 </div>
@@ -13,42 +13,94 @@
                 </div>
                 
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <table class="table table-sm table-bordered table-striped">
-                        <tr>
-                            <td>Paciente</td>
-                            <td>Medico</td>
-                            <td>Consultorio</td>
-                            <td>Piso</td>
-                            <td>Area</td>
-                            <td>Fecha Hora</td>
-                            <td>Opciones</td>
-                        </tr>
-                        <tr v-for="item in resultadoPersonas" :key="item">
-                            <td>{{item.usuario.apellido}} {{item.usuario.nombre}}</td>
-                            <td>{{item.medico.usuario.apellido +" "+ item.medico.usuario.nombre}}</td>
-                            <td class="text-center">00{{item.consultorio.id_consultorio}}</td>
-                            <td class="text-center">{{item.consultorio.piso}}</td>
-                            <td>{{item.consultorio.descr_consultorio}}</td>
-                            <td>{{item.fechaCita}}</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-warning">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                    </svg>
-                                </button>
-                                <button class="btn btn-sm btn-danger ml-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="card col-md-5" style="float:left; margin:12px; min-height: 250px;">
+            <div class="card-body col-md-12">
+                <h5 class="card-title" style="margin-bottom: 12px;">Netesa Administracion de Usuarios</h5>
+                <div class="card-text col-md-12">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">N Documento: </span>
+                        <input type="text" placeholder="Digite el Numero de documento..." v-model="numero_documento" aria-label="Document number"
+                            class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Nombre: </span>
+                        <input type="text" placeholder="Digite el nombre..." v-model="nombre" aria-label="Firs name"
+                            class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Apellido: </span>
+                        <input type="text" placeholder="Digite el apellido..." v-model="apellido" aria-label="Last name"
+                            class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Dirección: </span>
+                        <input type="text" placeholder="Digite la dirección..." v-model="direccion" aria-label="Address"
+                            class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Celular: </span>
+                        <input type="text" placeholder="Digite el celular..." v-model="celular" aria-label="Movil"
+                            class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Email: </span>
+                        <input type="text" placeholder="Digite la dirección..." v-model="email" aria-label="Email"
+                            class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Tipo Documento: </span>
+                        <select name="" id="" class="form-control form-control-sm" v-model="email" aria-label="Type" style="height: 37px;">
+                                    <option value="">Cedula Ciudadania</option>
+                                    <option value="">Tarjeta Identidad</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Id Rol: </span>
+                        <select name="" id="" class="form-control form-control-sm" v-model="id_rol" aria-label="Role" style="height: 37px;">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Id Ciudad: </span>
+                        <select name="" id="" class="form-control form-control-sm" v-model="id_ciudad" aria-label="City_Id" style="height: 37px;">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="width: 200px;">Id Genero: </span>
+                        <select name="" id="" class="form-control form-control-sm" v-model="id_genero" aria-label="Gender" style="height: 37px;">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-top:12px">
+                    <button @click="crear" :disabled="botonCrearDeshabilitado" type="button"
+                        class="btn btn-outline-primary">Crear</button>
+                    <button @click="actualizar" :disabled="botonActualizarDeshabilitado" type="button"
+                        class="btn btn-outline-primary">Actualizar</button>
+                    <button @click="eliminar" :disabled="botonActualizarDeshabilitado" type="button"
+                        class="btn btn-outline-danger">Eliminar</button>
                 </div>
             </div>
         </div>
+        <div class="card col-6" style="float:left; margin:12px; min-height: 250px;">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Consultar: </span>
+                    <input v-model="prefijo" placeholder="Digite el texto..." class="form-control"
+                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <select size="6" v-model="seleccionado" class="form-select" aria-label="multiple select example">
+                    <option v-for="nombreCompleto in nombresFiltrados" :key="nombreCompleto" @click="actualizando=true">
+                        {{ nombreCompleto }}</option>
+                </select>
+            </div>
+        </div>
+</div>
     </div>
 </template>
 
@@ -64,7 +116,7 @@
             token: 'pendiente',
             mensajeError: '',
             actualizando: false,
-            resultadoPersonas:[]
+            listaUsuarios:[]
         }
     },
     computed: {
@@ -88,9 +140,19 @@
     methods: {
         crear() {
             if (this.entradaValida()) {
-                const nombreCompleto = `${this.apellido}, ${this.nombre}`
-                if (!this.nombres.includes(nombreCompleto)) {
-                    this.nombres.push(nombreCompleto)
+                const numero_documento = `${this.numero_documento}`
+                const nombre = `${this.nombre}`
+                const apellido = `${this.apellido}`
+                const direccion = `${this.direccion}`
+                const celular = `${this.celular}`
+                const email = `${this.email}`
+                if (!this.listaUsuarios.includes(numero_documento)) {
+                    this.listaUsuarios.push(numero_documento)
+                    this.listaUsuarios.push(nombre)
+                    this.listaUsuarios.push(apellido)
+                    this.listaUsuarios.push(direccion)
+                    this.listaUsuarios.push(celular)
+                    this.listaUsuarios.push(email)
                     this.nombre = this.apellido = '';
                     mensajeError = '';
                     this.actualizando = false;
@@ -124,7 +186,7 @@
         entradaValida() {
             return this.nombre.trim() && this.apellido.trim();
         },
-        async consultarPersonas() {
+        async consultarUsuarios() {
             const options = {
                 method: 'GET',
                 headers: {
@@ -133,7 +195,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas', options)
+            fetch('http://localhost:8080/api/usuarios', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -143,7 +205,7 @@
                     } else {
                         const data = await response.json();
                         console.log(data);
-                        this.resultadoPersonas = data;
+                        this.listaUsuarios = data;
                     }
                 });
         },
