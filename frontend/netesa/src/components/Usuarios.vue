@@ -133,8 +133,8 @@
         }
     },
     watch: {
-        seleccionado(nombreCompleto) {
-            [this.apellido, this.nombre] = nombreCompleto.toString().split(', ');
+        seleccionado(numero_documento) {
+            [this.numero_documento] = numero_documento.toString().split(', ');
         }
     },
     methods: {
@@ -164,9 +164,9 @@
         },
         actualizar() {
             if (this.entradaValida() && this.seleccionado) {
-                const i = this.nombres.indexOf(this.seleccionado);
-                this.nombres[i] = this.seleccionado = `${this.apellido}, ${this.nombre}`;
-                this.seleccionado = this.nombre = this.apellido = '';
+                const i = this.numero_documento.indexOf(this.seleccionado);
+                this.numero_documento[i] = this.seleccionado = `${this.numero_documento}`;
+                this.seleccionado = this.numero_documento = '';
                 mensajeError = '';
                 this.actualizando = false;
                 this.$forceUpdate();
