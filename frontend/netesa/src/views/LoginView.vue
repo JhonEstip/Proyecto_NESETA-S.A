@@ -17,10 +17,10 @@
                                         <h1 class="h4 text-gray-900 mb-4">Bienvenido a NETESA!</h1>
                                     </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingresa tu email...">
+                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingresa tu email..." v-model="user">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña">
+                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" v-model="pass">
                                         </div>
                                         <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -51,15 +51,16 @@
 export default {
     data() {
         return {
-            token: 'pendiente',
             mensajeError: '',
+            user: "",
+            pass: ""
         }
     },
     methods: {
         async obtenerData() {
             const options = {
                 method: 'POST',
-                body: JSON.stringify({ id: 1 }),
+                body: JSON.stringify({ email: this.user, password: this.pass }),
                 headers: {
                     'Content-Type': 'application/json'
                     /* , 'Authorization': 'Bearer '+this.token */
@@ -76,7 +77,18 @@ export default {
                     } else {
                         const data = await response.json();
                         console.log(data);
-                        this.$router.push('home')
+                        if(data.access != false){
+                            localStorage.setItem("token", data.access)
+                            localStorage.setItem("user", data.user)
+                            this.$router.push('home')
+                        }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.msg,
+                        })
+                        }                       
+                        // this.$router.push('home')
                     }
                 });
         }

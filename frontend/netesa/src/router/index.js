@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import CitasView from "../views/CitasView.vue";
+import CitasView from "../components/Citas.vue";
 import Usuarios from "../components/Usuarios.vue";
 
 const router = createRouter({
@@ -25,18 +25,30 @@ const router = createRouter({
           component: CitasView,
         },
         {
-          path: "/about",
-          name: "about",
-          component: () => import("../views/AboutView.vue"),
-        },
-        {
           path: "/usuarios",
           name: "usuarios",
           component: Usuarios,
         },
-      ]
+      ],
     },
   ],
+});
+
+function existToken() {
+  // console.log(!!localStorage.token);
+  return !!localStorage.token;
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.path != "/" && existToken()) {
+    next();
+  } else if (to.path == "/" && !existToken()) {
+    next();
+  } else if (to.path != "/" && !existToken()) {
+    next("/");
+  } else {
+    next("/home");
+  }
 });
 
 export default router;
