@@ -47,7 +47,7 @@
                             <td><input type="text" v-model="idCita" hidden></td>
                             <td></td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" placeholder="2022-10-15 10:00" v-model="fecha">
+                                <input type="datetime-local" class="form-control form-control-sm" placeholder="2022-10-15 10:00" v-model="fecha">
                             </td>
 
                             <td class="text-center">
@@ -278,6 +278,8 @@
                         const data = await response.json();
                         //console.log(data);
                         this.resultadoCitas = data;
+                        let filtro = data.filter(c => c.consultorio.id_consultorio == 1);
+                        console.log(filtro);
                     }
                 });
         },
