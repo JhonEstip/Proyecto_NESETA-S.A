@@ -19,38 +19,20 @@
           />
         </div>
       </div>
-      <div
-        class="card col-md-5"
-        style="float: left; margin: 12px; min-height: 250px"
-      >
+      <div class="card col-md-12" style="float: left; margin: 12px; min-height: 250px">
         <div class="card-body col-md-12">
           <h5 class="card-title" style="margin-bottom: 12px">
             Netesa Administracion de Usuarios
           </h5>
           <div class="card-text col-md-12">
             <div class="input-group mb-3">
-              <span class="input-group-text" style="width: 200px"
-                >N Documento:
-              </span>
-              <input
-                type="text"
-                placeholder="Digite el Numero de documento..."
-                v-model="numero_documento"
-                aria-label="Document number"
-                class="form-control"
-              />
+              <span class="input-group-text" style="width: 200px">N Documento:</span>
+              <input type="text" placeholder="Digite el Numero de documento..." v-model="numero_documento" aria-label="Document number" class="form-control"/>
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" style="width: 200px"
-                >Nombre:
+              <span class="input-group-text" style="width: 200px">Nombre:
               </span>
-              <input
-                type="text"
-                placeholder="Digite el nombre..."
-                v-model="nombre"
-                aria-label="Firs name"
-                class="form-control"
-              />
+              <input type="text" placeholder="Digite el nombre..." v-model="nombre" aria-label="Firs name" class="form-control"/>
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text" style="width: 200px"
@@ -99,51 +81,27 @@
               />
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" style="width: 200px"
-                >Tipo Documento:
+              <span class="input-group-text" style="width: 200px">
+                Tipo Documento:
               </span>
-              <select
-                name=""
-                id=""
-                class="form-control form-control-sm"
-                v-model="tipo_documento"
-                aria-label="Type"
-                style="height: 37px"
-              >
-                <option value="">Cedula Ciudadania</option>
-                <option value="">Tarjeta Identidad</option>
+              <select name="" id="" class="form-control form-control-sm" v-model="tipo_documento" aria-label="Type" style="height: 37px">
+                <option v-for="itemTD in listaTiposDocumento" :key="itemTD" :value="itemTD.id_tipo_documento">{{itemTD.id_tipo_documento}}</option>
               </select>
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" style="width: 200px"
-                >Id Rol:
+              <span class="input-group-text" style="width: 200px">
+                Id Rol:
               </span>
-              <select
-                name=""
-                id=""
-                class="form-control form-control-sm"
-                v-model="id_rol"
-                aria-label="Role"
-                style="height: 37px"
-              >
-                <option value="">1</option>
-                <option value="">2</option>
+              <select name="" id="" class="form-control form-control-sm" v-model="id_rol" aria-label="Role" style="height: 37px">
+                <option v-for="itemLR in listaRoles" :key="itemLR" :value="itemLR.id">{{itemLR.id}}</option>
               </select>
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" style="width: 200px"
-                >Id Ciudad:
+              <span class="input-group-text" style="width: 200px">
+                Id Ciudad:
               </span>
-              <select
-                name=""
-                id=""
-                class="form-control form-control-sm"
-                v-model="id_ciudad"
-                aria-label="City_Id"
-                style="height: 37px"
-              >
-                <option value="">1</option>
-                <option value="">2</option>
+              <select name="" id=""  class="form-control form-control-sm" v-model="id_ciudad" aria-label="City_Id" style="height: 37px">
+                <option v-for="itemCiu in listaCiudades" :key="itemCiu" :value="itemCiu.id_ciudad">{{itemCiu.id_ciudad}}</option>
               </select>
             </div>
             <div class="input-group mb-3">
@@ -196,10 +154,7 @@
           </div>
         </div>
       </div>
-      <div
-        class="card col-6"
-        style="float: left; margin: 12px; min-height: 250px"
-      >
+      <div class="card col-12"  style="float: left; margin: 12px; min-height: 250px">
         <div class="card-body">
           <div class="input-group mb-3">
             <span class="input-group-text" id="inputGroup-sizing-default"
@@ -213,26 +168,36 @@
               aria-describedby="inputGroup-sizing-default"
             />
           </div>
-
-
-          <table class="table table-bordered table-sm table-striped">
+          <table class="table">
             <thead>
-                <tr>
-                    <td>Id</td>
-                    <td>Opciones</td>
-                </tr>
-                
+              <tr >
+                <th scope="col">Id</th>
+                <th scope="col">Numero Documento</th>
+                <th scope="col">Tipo Documento</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Celular</th>
+                <th scope="col">Email</th>
+              </tr>
             </thead>
             <tbody>
-                <tr v-for="item in listaUsuarios" :key="item">
-                        <td>{{ item.numeroDocumento +" "+item.apellido+" "+item.nombre }}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary" @click="buscarIdUsuario()" >Editar</button>
-                        </td>
-                </tr>
+              <tr v-for="item in listaUsuarios" :key="item">
+                <td >{{item.id}}</td>
+                <td>{{item.numeroDocumento}}</td>
+                <td>{{item.tipodocumento.id_tipo_documento}}</td>
+                <td>{{item.apellido}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.direccion}}</td>
+                <td>{{item.celular}}</td>
+                <td>{{item.email}}</td>
+                <td><button class = "ml-2 btn btn-sm btn-primary" @click="editar(item.id)">
+                  <i>Editar</i>
+                    </button>
+                </td>
+              </tr>
             </tbody>
-                    
-           </table>
+          </table>
         </div>
       </div>
     </div>
@@ -243,6 +208,7 @@
 export default {
   data() {
     return {
+      indice : -1,
       nombres: [],
       seleccionado: "",
       prefijo: "",
@@ -252,6 +218,9 @@ export default {
       mensajeError: "",
       actualizando: false,
       listaUsuarios: [],
+      listaTiposDocumento:[],
+      listaRoles:[],
+      listaCiudades:[]
     };
   },
   computed: {
@@ -273,58 +242,70 @@ export default {
     },
   },
   methods: {
+    entradaValida() { //funcional
+        return this.numero_documento.trim() && this.nombre.trim() && this.apellido.trim() && this.direccion.trim() && this.celular.trim() && this.email.trim();
+    },
     crear() {
-      if (this.entradaValida()) {
-        const numero_documento = `${this.numero_documento}`;
-        const nombre = `${this.nombre}`;
-        const apellido = `${this.apellido}`;
-        const direccion = `${this.direccion}`;
-        const celular = `${this.celular}`;
-        const email = `${this.email}`;
-        if (!this.listaUsuarios.includes(numero_documento)) {
-          this.listaUsuarios.push(numero_documento);
-          this.listaUsuarios.push(nombre);
-          this.listaUsuarios.push(apellido);
-          this.listaUsuarios.push(direccion);
-          this.listaUsuarios.push(celular);
-          this.listaUsuarios.push(email);
-          this.nombre = this.apellido = "";
-          this.mensajeError = "";
-          this.actualizando = false;
-          this.$forceUpdate();
-        }
-      } else {
-        this.mensajeError =
-          "Por favor ingrese todos los datos para crear la persona.";
-      }
-    },
-    actualizar() {
-      if (this.entradaValida() && this.seleccionado) {
-        const i = this.numero_documento.indexOf(this.seleccionado);
-        this.numero_documento[i] =
-          this.seleccionado = `${this.numero_documento}`;
-        this.seleccionado = this.numero_documento = "";
-        this.mensajeError = "";
-        this.actualizando = false;
-        this.$forceUpdate();
-      } else {
-        this.mensajeError =
-          "Por favor ingrese todos los datos para actualizar la información.";
-      }
-    },
-    eliminar() {
-      if (this.seleccionado) {
-        const i = this.nombres.indexOf(this.seleccionado);
-        this.nombres.splice(i, 1);
-        this.seleccionado = this.nombre = this.apellido = "";
-        this.mensajeError = "";
-        this.actualizando = false;
-      }
-    },
-    entradaValida() {
-      return this.nombre.trim() && this.apellido.trim();
-    },
+            if (this.entradaValida()) {
+              this.crearUsuario(
+                    this.numero_documento,
+                    this.nombre,
+                    this.apellido,
+                    this.direccion,
+                    this.celular,
+                    this.email,
+                    this.tipo_documento,
+                    this.id_rol,
+                    this.id_ciudad,
+                    this.id_genero
+                    );
+            } else {
+                this.mensajeError = "Por favor ingrese todos los datos para crear la persona.";
+            }
+        },
+        async crearUsuario(numero_documento,nombre,apellido,direccion,celular,email,tipo_documento,id_rol,id_ciudad,id_genero) {
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(
+                    {
+                     numeroDocumento:numero_documento,
+                     nombre:nombre,
+                     apellido:apellido,
+                     direccion:direccion,
+                     celular:celular,
+                     email:email,
+                     tipo_documento:tipo_documento,
+                     id_rol:id_rol,
+                     id_ciudad:id_ciudad,
+                     id_genero:id_genero
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token
+                }
+            };
 
+            fetch('http://localhost:8080/api/usuarios', options)
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        this.token = data.access;
+                        console.log(data);
+                        alertify.success('Usuario creada');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    }
+                });
+              },
+       
+    
     async consultarUsuarios() {
       const options = {
         method: "GET",
@@ -349,9 +330,84 @@ export default {
         }
       );
     },
+    async consultarTipoDocumento() {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        },
+      };
+
+      fetch("http://localhost:8080/api/tipodocumento", options).then(
+        async (response) => {
+          if (!response.ok) {
+            const error = new Error(response.statusText);
+            error.json = response.json();
+            this.mensajeError = error.message;
+            throw error;
+          } else {
+            const data = await response.json();
+            //console.log("personas",data);
+            this.listaTiposDocumento = data;
+          }
+        }
+      );
+    },
+    async consultarRol() {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        },
+      };
+
+      fetch("http://localhost:8080/api/rol", options).then(
+        async (response) => {
+          if (!response.ok) {
+            const error = new Error(response.statusText);
+            error.json = response.json();
+            this.mensajeError = error.message;
+            throw error;
+          } else {
+            const data = await response.json();
+            //console.log("personas",data);
+            this.listaRoles = data;
+          }
+        }
+      );
+    },
+    async consultarCiudad() {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        },
+      };
+
+      fetch("http://localhost:8080/api/ciudad", options).then(
+        async (response) => {
+          if (!response.ok) {
+            const error = new Error(response.statusText);
+            error.json = response.json();
+            this.mensajeError = error.message;
+            throw error;
+          } else {
+            const data = await response.json();
+            //console.log("personas",data);
+            this.listaCiudades = data;
+          }
+        }
+      );
+    },
   },
   mounted() {
     this.consultarUsuarios();
+    this.consultarTipoDocumento();
+    this.consultarRol();
+    this.consultarCiudad();
   },
 };
 </script>
