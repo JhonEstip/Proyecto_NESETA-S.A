@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+//import org.springframework.security.core.userdetails.User;
 
 import com.company.netesa.model.User;
 import com.company.netesa.repository.UserRepository;
@@ -45,6 +46,18 @@ public class UserServiceImpl implements UserService{
 	public List<User> findUserById(Long id) {
 		List<User> personas = repositorioUsuario.findUserById(id);
 		return personas;
+	}
+	
+	@Override
+	public List<User> findUserByEmail(String email) {
+		List<User> personas = repositorioUsuario.findUserByEmail(email);
+		return personas;
+	}
+
+	@Override
+	public Optional<User> findByEmail(String email){
+		Optional<User> user = repositorioUsuario.findByEmail(email);
+		return user;
 	}
 
 }

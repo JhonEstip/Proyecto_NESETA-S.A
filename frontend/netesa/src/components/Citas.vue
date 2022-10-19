@@ -112,7 +112,7 @@
             fecha: '',
             nombre: '',
             apellido: '',
-            token: 'pendiente',
+            token: localStorage.getItem("token"),
             actualizando: false,
             resultadoCitas:[],
             resultadoConsultorios:[],
@@ -169,7 +169,7 @@
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+this.token 
+                    'Authorization': 'Bearer '+ this.token
                 }
             };
 
@@ -382,40 +382,13 @@
                     }
                 });
     },
-        async obtenerData() {
-            const options = {
-                method: 'POST',
-                body: JSON.stringify({ id: 1 }),
-                headers: {
-                    'Content-Type': 'application/json'
-                    /* 'Authorization': 'Bearer '+this.token */
-                }
-            };
-
-            fetch('http://localhost:8080/api/auth', options)
-                .then(async (response) => {
-                    if (!response.ok) {
-                        const error = new Error(response.statusText);
-                        error.json = response.json();
-                        this.mensajeError = error.message;
-                        throw error;
-                    } else {
-                        const data = await response.json();
-                        this.token = data.access;
-                        console.log(data);
-                        this.consultarCitas();
-                        this.consultarConsultorio();
-                        this.consultarMedicos();
-                        this.consultarPersonas();
-                    }
-                });
-        }
     },
     mounted() {
-        this.obtenerData();
-        /* this.consultarCitas();
+        // this.obtenerData();
+        this.consultarCitas();
         this.consultarConsultorio();
-        this.consultarMedicos(); */
+        this.consultarMedicos(); 
+        this.consultarPersonas();
     }
 })
 </script>
