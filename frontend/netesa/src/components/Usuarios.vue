@@ -214,22 +214,25 @@
             />
           </div>
 
-          <select
-            size="6"
-            v-model="seleccionado"
-            class="form-select"
-            aria-label="multiple select example"
-          >
-            <option
-              v-for="item in listaUsuarios"
-              :key="item"
-              @click="actualizando = true"
-            >
-              {{
-                item.numeroDocumento + " " + item.apellido + " " + item.nombre
-              }}
-            </option>
-          </select>
+
+          <table class="table table-bordered table-sm table-striped">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Opciones</td>
+                </tr>
+                
+            </thead>
+            <tbody>
+                <tr v-for="item in listaUsuarios" :key="item">
+                        <td>{{ item.numeroDocumento +" "+item.apellido+" "+item.nombre }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" @click="buscarIdUsuario()" >Editar</button>
+                        </td>
+                </tr>
+            </tbody>
+                    
+           </table>
         </div>
       </div>
     </div>
