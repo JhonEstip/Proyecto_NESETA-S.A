@@ -93,7 +93,7 @@
                 Id Rol:
               </span>
               <select name="" id="" class="form-control form-control-sm" v-model="id_rol" aria-label="Role" style="height: 37px">
-                <option v-for="itemLR in listaRoles" :key="itemLR" :value="itemLR.id">{{itemLR.id}}</option>
+                <option v-for="itemLR in listaRoles" :key="itemLR" :value="itemLR.id">{{itemLR.descripcionRol}}</option>
               </select>
             </div>
             <div class="input-group mb-3">
@@ -105,20 +105,16 @@
               </select>
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" style="width: 200px"
-                >Id Genero:
+              <span class="input-group-text" style="width: 200px">
+                Id Genero:
               </span>
-              <select
-                name=""
-                id=""
-                class="form-control form-control-sm"
-                v-model="id_genero"
-                aria-label="Gender"
-                style="height: 37px"
-              >
-                <option value="">1</option>
-                <option value="">2</option>
+              <select name="" id="" class="form-control form-control-sm" v-model="id_genero" aria-label="Gender" style="height: 37px">
+                <option v-for="itemGen in listaGenero" :key="itemGen" :value="itemGen.id">{{itemGen.id}}</option>
               </select>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" style="width: 200px">Password: </span>
+              <input type="text" placeholder="Digite el password..." v-model="password" aria-label="Email" class="form-control"/>
             </div>
           </div>
           <div
@@ -220,7 +216,8 @@ export default {
       listaUsuarios: [],
       listaTiposDocumento:[],
       listaRoles:[],
-      listaCiudades:[]
+      listaCiudades:[],
+      listaGenero:[]
     };
   },
   computed: {
@@ -257,13 +254,14 @@ export default {
                     this.tipo_documento,
                     this.id_rol,
                     this.id_ciudad,
-                    this.id_genero
+                    this.id_genero,
+                    this.password
                     );
             } else {
                 this.mensajeError = "Por favor ingrese todos los datos para crear la persona.";
             }
         },
-        async crearUsuario(numero_documento,nombre,apellido,direccion,celular,email,tipo_documento,id_rol,id_ciudad,id_genero) {
+        async crearUsuario(numero_documento,nombre,apellido,direccion,celular,email,tipo_documento,id_rol,id_ciudad,id_genero,password) {
             const options = {
                 method: 'POST',
                 body: JSON.stringify(
@@ -275,9 +273,10 @@ export default {
                      celular:celular,
                      email:email,
                      tipo_documento:tipo_documento,
-                     id_rol:id_rol,
-                     id_ciudad:id_ciudad,
-                     id_genero:id_genero
+                     rol:id_rol,
+                     cuidad:id_ciudad,
+                     genero:id_genero,
+                     password:password
                     }
                 ),
                 headers: {
@@ -297,7 +296,7 @@ export default {
                         const data = await response.json();
                         this.token = data.access;
                         console.log(data);
-                        alertify.success('Usuario creada');
+                        this.alertify.success('Usuario creada');
                         setTimeout(() => {
                             window.location.reload();
                         }, 1000);
@@ -402,12 +401,37 @@ export default {
         }
       );
     },
+    async consultarGenero() {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        },
+      };
+
+      fetch("http://localhost:8080/api/genero", options).then(
+        async (response) => {
+          if (!response.ok) {
+            const error = new Error(response.statusText);
+            error.json = response.json();
+            this.mensajeError = error.message;
+            throw error;
+          } else {
+            const data = await response.json();
+            //console.log("personas",data);
+            this.listaGenero = data;
+          }
+        }
+      );
+    },
   },
   mounted() {
     this.consultarUsuarios();
     this.consultarTipoDocumento();
     this.consultarRol();
     this.consultarCiudad();
+    this.consultarGenero();
   },
 };
 </script>
