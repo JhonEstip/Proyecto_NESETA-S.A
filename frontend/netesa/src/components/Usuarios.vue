@@ -1,5 +1,5 @@
 <template>
-  <div class="container-x px-4">
+  <div class="container-x px-2 w-100">
     <div class="contenedor1">
       <div class="row pb-1 mt-4 d-flex justify-content-between">
         <div class="col-sm-10">
@@ -164,39 +164,43 @@
               aria-describedby="inputGroup-sizing-default"
             />
           </div>
-          <table class="table">
-            <thead>
-              <tr >
-                <th scope="col">Id</th>
-                <th scope="col">Numero Documento</th>
-                <th scope="col">Tipo Documento</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Dirección</th>
-                <th scope="col">Celular</th>
-                <th scope="col">Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in listaUsuarios" :key="item">
-                <td >{{item.id}}</td>
-                <td>{{item.numeroDocumento}}</td>
-                <td>{{item.tipodocumento.id_tipo_documento}}</td>
-                <td>{{item.apellido}}</td>
-                <td>{{item.nombre}}</td>
-                <td>{{item.direccion}}</td>
-                <td>{{item.celular}}</td>
-                <td>{{item.email}}</td>
-                <td><button class = "ml-2 btn btn-sm btn-primary" @click="editar(item.id)">
-                  <i>Editar</i>
-                    </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
+    
+    <div class="contendor2 5">
+      <table class="table">
+        <thead>
+          <tr >
+            <th scope="col">Id</th>
+            <th scope="col">Numero Documento</th>
+            <th scope="col">Tipo Documento</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in listaUsuarios" :key="item">
+            <td >{{item.id}}</td>
+            <td>{{item.numeroDocumento}}</td>
+            <td>{{item.tipodocumento.tipoDocumento}}</td>
+            <td>{{item.apellido}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.direccion}}</td>
+            <td>{{item.celular}}</td>
+            <td>{{item.email}}</td>
+            <td><button class = "ml-2 btn btn-sm btn-primary" @click="editar(item.id)">
+              <i>Editar</i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </template>
 
@@ -272,10 +276,10 @@ export default {
                      direccion:direccion,
                      celular:celular,
                      email:email,
-                     tipo_documento:tipo_documento,
-                     rol:id_rol,
-                     cuidad:id_ciudad,
-                     genero:id_genero,
+                     tipo_documento:{id:id_tipo_documento},
+                     rol:{id:id_rol},
+                     cuidad:{id:id_ciudad},
+                     genero:{id:id_genero},
                      password:password
                     }
                 ),
@@ -323,7 +327,7 @@ export default {
             throw error;
           } else {
             const data = await response.json();
-            //console.log("personas",data);
+            console.log("personas",data);
             this.listaUsuarios = data;
           }
         }
