@@ -14,8 +14,7 @@ export default {
 
 
 <template>
-<div class="container">
-  <!-- Navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <!-- Container wrapper -->
   <div class="container-fluid">
@@ -64,9 +63,9 @@ export default {
         <a
           class="dropdown-toggle d-flex align-items-center hidden-arrow"
           href="#"
-          id="navbarDropdownMenuAvatar"
+          id="dropdownMenuButton1"
           role="button"
-          data-mdb-toggle="dropdown"
+          data-bs-toggle="dropdown"
           aria-expanded="false"
         >
           <img
@@ -77,13 +76,8 @@ export default {
             loading="lazy"
           />
         </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuAvatar"
-        >
-          <li>
-            <div class="dropdown-item" @click="cerrarSesion">Logout</div>
-          </li>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+          <li><div class="dropdown-item" href="#" @click="cerrarSesion">Cerrar Sesion</div></li>
         </ul>
       </div>
     </div>
@@ -92,5 +86,4 @@ export default {
   <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
-</div>
 </template>
