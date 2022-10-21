@@ -12,6 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>netesa</name>
 	<description>Demo project for Spring Boot</description>
+	<packaging>war</packaging>  <!-- PASO 1 PARA SERVIDOR -->
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -23,6 +24,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>  <!-- PASO 2 PARA SERVIDOR -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 
 		<dependency>
@@ -61,10 +68,17 @@
 			<artifactId>json-patch</artifactId>
 			<version>1.12</version>
 		</dependency>
+		
+		<dependency>  <!-- PASO 3 PARA SERVIDOR -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 	</dependencies>
 
 	<build>
+	<finalName>netesa_sa</finalName> <!-- PASO 4 PARA SERVIDOR -->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

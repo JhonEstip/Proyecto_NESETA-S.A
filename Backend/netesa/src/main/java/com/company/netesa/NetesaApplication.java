@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +15,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 @SpringBootApplication
-public class NetesaApplication {
+public class NetesaApplication extends SpringBootServletInitializer { //  PASO 5 PARA SERVIDOR
 
 	public static void main(String[] args) {
 		SpringApplication.run(NetesaApplication.class, args);
 	}
+	
+	
+	//  PASO 6 PARA SERVIDOR
+	
+	@Override    
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(NetesaApplication.class);
+    }
+	
+	
+	
 	
 	@EnableWebSecurity
 	@Configuration
