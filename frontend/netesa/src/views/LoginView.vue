@@ -67,7 +67,7 @@ export default {
                 }
             };
 
-            fetch('http://localhost:8080/api/auth', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/auth', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);

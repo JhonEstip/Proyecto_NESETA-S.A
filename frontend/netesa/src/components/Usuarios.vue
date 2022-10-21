@@ -222,7 +222,7 @@ export default {
                 },
               };
 
-              let consulta = await fetch("http://localhost:8080/api/usuarios/" + id, options)
+              let consulta = await fetch("http://132.145.163.148:8080/netesa_sa/api/usuarios/" + id, options)
                 if (!consulta.ok) {
                           const error = new Error(consulta.statusText);
                           error.json = consulta.json();
@@ -236,7 +236,8 @@ export default {
                   )
                   this.myModal.hide()
                   setTimeout(() => {
-                    window.location.reload()
+                    this.$router.push('home')
+                    this.$router.push('usuarios')
                   }, 2000);
                   ;
                 }
@@ -265,7 +266,7 @@ export default {
                 },
               };
 
-              let consulta = await fetch("http://localhost:8080/api/usuarios/" + this.idUsuario, options)
+              let consulta = await fetch("http://132.145.163.148:8080/netesa_sa/api/usuarios/" + this.idUsuario, options)
                 if (!consulta.ok) {
                           const error = new Error(consulta.statusText);
                           error.json = consulta.json();
@@ -279,7 +280,8 @@ export default {
                   )
                   this.myModal.hide()
                   setTimeout(() => {
-                    window.location.reload()
+                    this.$router.push('home')
+                    this.$router.push('usuarios')
                   }, 2000);
                 }
               console.log("AGREGAR",consulta)
@@ -325,7 +327,7 @@ export default {
                 },
               };
 
-              let consulta = await fetch("http://localhost:8080/api/usuarios", options)
+              let consulta = await fetch("http://132.145.163.148:8080/netesa_sa/api/usuarios", options)
                 if (!consulta.ok) {
                           const error = new Error(consulta.statusText);
                           error.json = consulta.json();
@@ -339,7 +341,8 @@ export default {
                   )
                   this.myModal.hide()
                   setTimeout(() => {
-                    window.location.reload()
+                    this.$router.push('home')
+                    this.$router.push('usuarios')
                   }, 2000);
                 }
               console.log("AGREGAR",consulta)
@@ -356,7 +359,7 @@ export default {
         },
       };
 
-      let consulta = await fetch("http://localhost:8080/api/usuarios", options)
+      let consulta = await fetch("http://132.145.163.148:8080/netesa_sa/api/usuarios", options)
       if (!consulta.ok) {
             const error = new Error(consulta.statusText);
             error.json = consulta.json();
@@ -377,7 +380,7 @@ export default {
         },
       };
 
-      fetch("http://localhost:8080/api/tipodocumento", options).then(
+      fetch("http://132.145.163.148:8080/netesa_sa/api/tipodocumento", options).then(
         async (response) => {
           if (!response.ok) {
             const error = new Error(response.statusText);
@@ -401,7 +404,7 @@ export default {
         },
       };
 
-      fetch("http://localhost:8080/api/rol", options).then(
+      fetch("http://132.145.163.148:8080/netesa_sa/api/rol", options).then(
         async (response) => {
           if (!response.ok) {
             const error = new Error(response.statusText);
@@ -425,7 +428,7 @@ export default {
         },
       };
 
-      fetch("http://localhost:8080/api/ciudad", options).then(
+      fetch("http://132.145.163.148:8080/netesa_sa/api/ciudad", options).then(
         async (response) => {
           if (!response.ok) {
             const error = new Error(response.statusText);
@@ -449,7 +452,7 @@ export default {
         },
       };
 
-      fetch("http://localhost:8080/api/genero", options).then(
+      fetch("http://132.145.163.148:8080/netesa_sa/api/genero", options).then(
         async (response) => {
           if (!response.ok) {
             const error = new Error(response.statusText);
