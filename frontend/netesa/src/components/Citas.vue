@@ -3,15 +3,6 @@
         <div class="contenedor1">
             <div class="row pb-1 mt-4 d-flex justify-content-between">
                 <div class="col-sm-10"><h3>REPORTE DE CITAS PARA ADMINISTRADOR</h3></div>
-                <div class="col-sm-2">
-                    <input type="date" class="form-control" value="date" id="fecha">
-                </div>
-            </div>
-            <div class="row pb-2 d-flex justify-content-end">
-                <div class="col-sm-3">
-                    <input type="text" placeholder="Search..." id="buscador" class="form-control">
-                </div>
-                
             </div>
             <div class="row">
                 <div class="col-sm-12">
@@ -122,16 +113,6 @@
         }
     },
     computed: {
-        nombresFiltrados() {
-            return this.nombres.filter((n) =>
-                n.toLowerCase().startsWith(this.prefijo.toLowerCase())
-            )
-        },
-    },
-    watch: {
-        seleccionado(nombreCompleto) {
-            [this.apellido, this.nombre] = nombreCompleto.toString().split(', ');
-        }
     },
     methods: {
         crear() {
