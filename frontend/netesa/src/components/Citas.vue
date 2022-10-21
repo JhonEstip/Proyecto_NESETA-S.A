@@ -42,7 +42,7 @@
                             </th>
 
                             <th class="text-center">
-                                <button v-if="rolEsp != 3" style="margin-left: 5px; padding: 4px;" class="btn btn-sm btn-outline-success" @click="crear">
+                                <button style="margin-left: 5px; padding: 4px;" class="btn btn-sm btn-outline-success" @click="crear">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus"
                                         viewBox="0 0 16 16">
                                         <path

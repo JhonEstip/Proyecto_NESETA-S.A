@@ -4,6 +4,7 @@ import CitasView from "../components/Citas.vue";
 import Usuarios from "../components/Usuarios.vue";
 import Medicos from "../components/medicos.vue";
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
