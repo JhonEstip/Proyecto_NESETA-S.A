@@ -6,43 +6,43 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <table class="table table-sm table-bordered table-striped">
-                        <tr class="table-success">
-                            <td>Paciente</td>
-                            <td>Medico</td>
-                            <td>Consultorio</td>
-                            <td>Piso</td>
-                            <td>Area</td>
-                            <td>Fecha Hora</td>
-                            <td>Opciones</td>
+                    <table class="table">
+                        <tr class="table-success text-white" style="background-color: #1E8DF6;">
+                            <th>Paciente</th>
+                            <th>Medico</th>
+                            <th>Consultorio</th>
+                            <th>Piso</th>
+                            <th>Area</th>
+                            <th>Fecha Hora</th>
+                            <th>Opciones</th>
                         </tr>
-                        <tr>
-                            <td>
+                        <tr v-if="rolEsp != 3" style="border-bottom: 1px solid white;">
+                            <th>
                                 <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoPaciente">
                                     <option value="" selected>Pacientes...</option>
                                     <option v-for="item in resultadoPersonas" :key="item" :value="item.id">{{item.apellido +" "+item.nombre}}</option>
                                 </select>
-                            </td>
-                            <td>
+                            </th>
+                            <th>
                                 <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoMedico">
                                     <option value="">Medicos...</option>
                                     <option v-for="item in resultadoMedicos" :key="item" :value="item.id">{{item.usuario.apellido +" "+item.usuario.nombre}}</option>
                                 </select>
-                            </td>
-                            <td>
+                            </th>
+                            <th>
                                 <select name="" id="" class="form-control form-control-sm" v-model="seleccionadoConsultorio">
                                     <option value="">Consultorio...</option>
                                     <option v-for="item in resultadoConsultorios" :key="item" :value="item.id_consultorio">{{item.id_sucursal.ciudad.ciudad +" "+item.id_sucursal.descripcion +" "+item.descr_consultorio}}</option>
                                 </select>
-                            </td>
-                            <td><input type="text" v-model="idCita" hidden></td>
-                            <td></td>
-                            <td>
+                            </th>
+                            <th><input type="text" v-model="idCita" hidden></th>
+                            <th></th>
+                            <th>
                                 <input type="datetime-local" class="form-control form-control-sm" placeholder="2022-10-15 10:00" v-model="fecha">
-                            </td>
+                            </th>
 
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-success" @click="crear">
+                            <th class="text-center">
+                                <button v-if="rolEsp != 3" style="margin-left: 5px; padding: 4px;" class="btn btn-sm btn-outline-success" @click="crear">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus"
                                         viewBox="0 0 16 16">
                                         <path
@@ -51,7 +51,7 @@
                                             d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z" />
                                     </svg>
                                 </button>
-                                <button class="ml-2 btn btn-sm btn-primary" @click="actualizar">
+                                <button v-if="rolEsp != 3" style="margin-left: 5px; padding: 4px;" class="btn btn-sm btn-outline-primary" @click="actualizar">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
                                         <path
@@ -59,18 +59,18 @@
                                     </svg>
                                 </button>
                             
-                            </td>
+                            </th>
                         </tr>
-                        <tr v-for="item in resultadoCitas" :key="item">
-                            <td>{{item.usuario.apellido}} {{item.usuario.nombre}}</td>
-                            <td>{{item.medico.usuario.apellido +" "+ item.medico.usuario.nombre}}</td>
-                            <td class="text-center">00{{item.consultorio.id_consultorio}}</td>
-                            <td class="text-center">{{item.consultorio.piso}}</td>
-                            <td>{{item.consultorio.descr_consultorio}}</td>
-                            <td>{{item.fechaCita}}</td>
-                            <td class="text-center">
+                        <tr v-for="item in resultadoCitas" :key="item" style="border-bottom: 1px solid white;">
+                            <th>{{item.usuario.apellido}} {{item.usuario.nombre}}</th>
+                            <th>{{item.medico.usuario.apellido +" "+ item.medico.usuario.nombre}}</th>
+                            <th class="text-center">00{{item.consultorio.id_consultorio}}</th>
+                            <th class="text-center">{{item.consultorio.piso}}</th>
+                            <th>{{item.consultorio.descr_consultorio}}</th>
+                            <th>{{item.fechaCita}}</th>
+                            <th class="text-center">
 
-                                <button @click="$router.push({name: 'medicos', params: { id: item.id },})">
+                                <button @click="$router.push({name: 'medicos', params: { id: item.id },})" style="margin-left: 5px; padding: 4px;" class="btn btn-sm btn-outline-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses"
                                         viewBox="0 0 16 16">
                                         <path
@@ -78,17 +78,17 @@
                                     </svg>
                                 </button>
 
-                                <button class="btn btn-sm btn-warning" @click="editar(item.id)">
+                                <button v-if="rolEsp != 3" style="margin-left: 5px; padding: 4px;" class="btn btn-sm btn-outline-warning" @click="editar(item.id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                     </svg>
                                 </button>
-                                <button class="btn btn-sm btn-danger ml-2" @click="eliminar(item.id)">
+                                <button v-if="rolEsp != 3" style="margin-left: 5px; padding: 4px;"  class="btn btn-sm btn-outline-danger" @click="eliminar(item.id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
                                     </svg>
                                 </button>
-                            </td>
+                            </th>
                         </tr>
                     </table>
                 </div>
@@ -102,16 +102,16 @@
         data() {
         return {
             citas: [],
-            seleccionadoPaciente: '',
-            seleccionadoMedico: '',
-            seleccionadoConsultorio: '',
-            idCita: '',
-            fecha: '',
-            nombre: '',
-            apellido: '',
+            seleccionadoPaciente: "",
+            seleccionadoMedico: "",
+            seleccionadoConsultorio: "",
+            idCita: "",
+            fecha: "",
+            nombre: "",
+            apellido: "",
             token: localStorage.getItem("token"),
-            rol:localStorage.getItem("user"),
-            rolEsp:'',
+            rol:JSON.parse(localStorage.getItem("user")),
+            rolEsp:"",
             actualizando: false,
             resultadoCitas:[],
             resultadoConsultorios:[],
@@ -162,9 +162,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas/'+id, options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+id, options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+id, options)
+                 .then(async (response) => {
                     if (response.status === 200) {
                         console.log("mensaje",response);
                         setTimeout(() => {
@@ -182,9 +181,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/medicos', options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/medicos', options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/medicos', options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -206,9 +204,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas/'+id, options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+id, options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+id, options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -236,9 +233,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/usuarios', options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/usuarios', options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/usuarios', options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -260,9 +256,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas', options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/citas', options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/citas', options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -285,9 +280,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/consultorio', options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/consultorio', options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/consultorio', options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -317,9 +311,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas/'+idCita, options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+idCita, options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+idCita, options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -353,9 +346,8 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas', options)
-            /* fetch('http://132.145.163.148:8080/netesa_sa/api/citas', options)
-             */    .then(async (response) => {
+             fetch('http://132.145.163.148:8080/netesa_sa/api/citas', options)
+                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
                         error.json = response.json();
@@ -401,7 +393,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/historia', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/historia', options)
                .then(async (response) => {
                     // console.log("respuesta",response)
                     if (!response.ok) {
@@ -417,9 +409,9 @@
     },
     },
     mounted() {
-        /* console.log("rol",this.rol);
-        this.rolEspecial = this.rol['id'];
-        console.log("rolid",this.rolEsp); */
+        //console.log("rol",this.rol);
+        this.rolEsp = this.rol[0]['rol']['id'];
+        //console.log("rolid",this.rolEsp);
         this.consultarCitas();
         this.consultarConsultorio();
         this.consultarMedicos(); 

@@ -79,7 +79,7 @@ export default {
                         console.log(data);
                         if(data.access != false){
                             localStorage.setItem("token", data.access)
-                            localStorage.setItem("user", data.user)
+                            localStorage.setItem("user", JSON.stringify(data.user))
                             this.$router.push('home')
                         }else{
                             Swal.fire({

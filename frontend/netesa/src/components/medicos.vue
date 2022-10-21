@@ -86,7 +86,7 @@ export default ({
                 }
             };
 
-            fetch('http://localhost:8080/api/historia/'+id_cita, options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/historia/'+id_cita, options)
                 .then(async (response) => {
                     // console.log("respuesta",response)
                     if (!response.ok) {
@@ -114,7 +114,7 @@ export default ({
                 }
             };
 
-            fetch('http://localhost:8080/api/historia/'+this.url_data, options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/historia/'+this.url_data, options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -136,7 +136,7 @@ export default ({
                 }
             };
 
-            fetch('http://localhost:8080/api/historia', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/historia', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);

@@ -1,14 +1,25 @@
 <script>
 import { RouterView } from 'vue-router';
-export default {
+export default ({
+  data() {
+        return {
+            rol:JSON.parse(localStorage.getItem("user")),
+            rolEsp:""
+        }
+    },
   methods: {
         async cerrarSesion() {
           localStorage.removeItem("token")
           localStorage.removeItem("user")
           this.$router.push('/')
         }
-  }
-}
+  },
+    mounted() {
+        //console.log("rol",this.rol);
+        this.rolEsp = this.rol[0]['rol']['id'];
+        //console.log("rolid",this.rolEsp);
+    }
+})
 </script>
 
 
@@ -43,7 +54,7 @@ export default {
         <li class="nav-item">
           <RouterLink class="nav-link active" to="/citas">Citas</RouterLink>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="rolEsp != 3">
           <RouterLink class="nav-link active" to="/usuarios">Usuarios</RouterLink>
         </li>
       </ul>
