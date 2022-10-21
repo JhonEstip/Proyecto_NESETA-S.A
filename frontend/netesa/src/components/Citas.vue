@@ -154,7 +154,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas/'+id, options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+id, options)
                 .then(async (response) => {
                     if (response.status === 200) {
                         console.log("mensaje",response);
@@ -173,7 +173,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/medicos', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/medicos', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -196,7 +196,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas/'+id, options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+id, options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -225,7 +225,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/usuarios', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/usuarios', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -248,7 +248,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/citas', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -273,7 +273,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/consultorio', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/consultorio', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -304,7 +304,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas/'+idCita, options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/citas/'+idCita, options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
@@ -345,7 +345,7 @@
                 }
             };
 
-            fetch('http://localhost:8080/api/citas', options)
+            fetch('http://132.145.163.148:8080/netesa_sa/api/citas', options)
                 .then(async (response) => {
                     if (!response.ok) {
                         const error = new Error(response.statusText);
