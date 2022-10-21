@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h4><code>Sintomas</code></h4>
-                <textarea v-model="diagnostico" cols="30" rows="5" class="form-control">{{}}</textarea>
+                <textarea v-model="diagnostico"  cols="30" rows="5" class="form-control">{{}}</textarea>
             </div>
         </div>
         <div class="row">
@@ -57,7 +57,9 @@ export default ({
             resultadoConsultaId: [],
             diagnostico:'',
             registro:'',
-            seleccionadoCita:''
+            seleccionadoCita:'',
+            idCitaDb:'',
+            idUsuarioDb:''
         }
     },
     methods: {
@@ -68,12 +70,14 @@ export default ({
                                 }
                             )[0]['id'];
             const options = {
-                method: 'PATCH',
+                method: 'PUT',
                 body: JSON.stringify(
                     {
                      siguiente_cita:"NO",
+                     id_cita:{id:this.idCitaDb},
+                     id_usuario:{id:this.idUsuarioDb},
                      diagnostico:this.diagnostico,
-                     registro_medico:this.registro_medico,
+                     registro_medico:this.registro,
                     }
                 ),
                 headers: {
@@ -144,10 +148,12 @@ export default ({
                         console.log("data sin filtro",data);
                         let filtro = data.filter(c => c.id_cita.id == this.url_data);
                         this.resultadoConsultaId = filtro;
-                        this.diagnostico = filtro[0]['registro_medico'];
-                        this.registro = filtro[0]['diagnostico'];
+                        this.registro = filtro[0]['registro_medico'];
+                        this.diagnostico = filtro[0]['diagnostico'];
                         this.seleccionadoCita = filtro[0]['siguiente_cita'];
-                        //console.log("1",this.diagnostico,"2",this.registro,"3",this.seleccionadoCita);
+                        this.idCitaDb = filtro[0]['id_cita']['id'];
+                        this.idUsuarioDb = filtro[0]['id_usuario']['id'];
+                        //console.log("1",this.idCitaDb,"2",this.idUsuarioDb);
                         //console.log("filtrado",filtro);
                     }
                 });
