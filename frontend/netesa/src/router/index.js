@@ -26,7 +26,7 @@ const router = createRouter({
           component: CitasView,
         },
         {
-          path: "/medicos",
+          path: "/medicos/:id",
           name: "medicos",
           component: Medicos,
         },

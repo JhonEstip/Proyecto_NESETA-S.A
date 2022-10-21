@@ -46,9 +46,6 @@ export default {
         <li class="nav-item">
           <RouterLink class="nav-link active" to="/usuarios">Usuarios</RouterLink>
         </li>
-        <li class="nav-item">
-          <RouterLink class="nav-link active" to="/medicos">Medico</RouterLink>
-        </li>
       </ul>
       <!-- Left links -->
     </div>

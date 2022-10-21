@@ -1,5 +1,5 @@
 <template>
-    <div class="container-x px-4">
+    <div class="container px-4">
         <div class="contenedor1">
             <div class="row pb-1 mt-4 d-flex justify-content-between">
                 <div class="col-sm-10"><h3>REPORTE DE CITAS PARA ADMINISTRADOR</h3></div>
@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <table class="table table-sm table-bordered table-striped">
-                        <tr class="table-primary">
+                        <tr class="table-success">
                             <td>Paciente</td>
                             <td>Medico</td>
                             <td>Consultorio</td>
@@ -59,9 +59,6 @@
                                     </svg>
                                 </button>
                             
-
-
-                                
                             </td>
                         </tr>
                         <tr v-for="item in resultadoCitas" :key="item">
@@ -72,6 +69,15 @@
                             <td>{{item.consultorio.descr_consultorio}}</td>
                             <td>{{item.fechaCita}}</td>
                             <td class="text-center">
+
+                                <button @click="$router.push({name: 'medicos', params: { id: item.id },})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+                                    </svg>
+                                </button>
+
                                 <button class="btn btn-sm btn-warning" @click="editar(item.id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
@@ -104,6 +110,8 @@
             nombre: '',
             apellido: '',
             token: localStorage.getItem("token"),
+            rol:localStorage.getItem("user"),
+            rolEsp:'',
             actualizando: false,
             resultadoCitas:[],
             resultadoConsultorios:[],
@@ -257,10 +265,9 @@
                         throw error;
                     } else {
                         const data = await response.json();
-                        //console.log(data);
+                        console.log("todas la citas",data);
                         this.resultadoCitas = data;
-                        let filtro = data.filter(c => c.consultorio.id_consultorio == 1);
-                        console.log(filtro);
+                        //let filtro = data.filter(c => c.consultorio.id_consultorio == 1);
                     }
                 });
         },
@@ -323,12 +330,6 @@
                 });
     },
         async crearCita(paciente,medico,consultorio,hora) {
-            console.log({
-                     fechaCita:hora,
-                     consultorio:{id_consultorio:consultorio},
-                     medico:{id:medico},
-                     usuario:{id:paciente}
-                    });
             const options = {
                 method: 'POST',
                 body: JSON.stringify(
@@ -354,18 +355,63 @@
                         throw error;
                     } else {
                         const data = await response.json();
-                        this.token = data.access;
+                        //this.token = data.access; <====
                         console.log(data);
-                        alertify.success('Cita creada');
+                        Swal.fire(
+                            'Cita creada',
+                            'netesa s.a.s',
+                            'success'
+                            )
+                        this.crearHistoria();////////////////////////////////descomentar
                         setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
+                            this.crearHistoria();
+                        }, 3000);
+                    }
+                });
+    },
+        async crearHistoria() {
+            this.consultarCitas();
+            let id_cita = this.resultadoCitas.sort(
+                                function (a, b) {
+                                    return parseFloat(b['id']) - parseFloat(a['id']);
+                                }
+                            )[0]['id'];
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(
+                    {
+                     siguiente_cita:"NO",
+                     id_cita:{id:id_cita},
+                     id_usuario:{id:this.seleccionadoPaciente},
+                     diagnostico:"",
+                     registro_medico:""
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+this.token
+                }
+            };
+
+            fetch('http://localhost:8080/api/historia', options)
+                .then(async (response) => {
+                    // console.log("respuesta",response)
+                    if (!response.ok) {
+                        const error = new Error(response.statusText);
+                        error.json = response.json();
+                        this.mensajeError = error.message;
+                        throw error;
+                    } else {
+                        const data = await response.json();
+                        console.log("data historia",data);
                     }
                 });
     },
     },
     mounted() {
-        // this.obtenerData();
+        /* console.log("rol",this.rol);
+        this.rolEspecial = this.rol['id'];
+        console.log("rolid",this.rolEsp); */
         this.consultarCitas();
         this.consultarConsultorio();
         this.consultarMedicos(); 
@@ -373,3 +419,6 @@
     }
 })
 </script>
+<style>
+
+</style>

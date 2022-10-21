@@ -38,10 +38,10 @@ public class HistoriaClinica implements Serializable{
     @JoinColumn(name = "id_usuario")
 	private User id_usuario;
 	
-	@Column(name="registro_medico", length = 50)
+	@Column(name="registro_medico", length = 5000)
 	private String registro_medico;
 	
-	@Column(name="diagnostico", length = 50)
+	@Column(name="diagnostico", length = 5000)
 	private String diagnostico;
 	
 	@Column(name="siguiente_cita", length = 50)
